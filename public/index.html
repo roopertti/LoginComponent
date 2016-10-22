@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Login</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+	<fieldset>
+		<strong><legend>Login/Register</legend></strong>
+		<div class="row">
+			<div class="col-md-4">
+				<label class="lbls" for="username">Username</label>
+				<input type="text" id='username' placeholder="Username" maxlength="10">
+				<input type="text" id='password' placeholder="Password" maxlength="10">
+				<button onclick='loginUser()' id="login" class="btn btn-default">Login</button>
+				<button id="register" class="btn btn-success">Register</button>
+				<button onclick='logout()' id="logout" class="btn btn-danger hidden">Logout</button>		
+			</div>
+		</div>
+	</fieldset>
+	<script>
+		function loginUser(){
+			var username = $("#username").val()
+			var password = $("#password").val()
+
+			var user = {
+				"username": username,
+				"password": password
+			}
+
+			$.ajax({
+				type: 'GET',
+				url: '/login',
+				data: user,
+				success: function(data){
+					if(data){
+						console.log("Login succesful")
+						$("#username").addClass("hidden")
+						$("#password").addClass("hidden")
+						$("#login").addClass("hidden")
+						$(".lbls").addClass("hidden")
+						$("#logout").removeClass("hidden")
+						$("#register").addClass("hidden")
+					} else {
+						console.log("Login failed")
+						alert("Login failed!")
+					}
+				}
+			})
+		}
+
+		/*function register(){
+			//TODO
+		}*/
+
+		function logout(){
+			console.log("logged out")
+			$("#username").val('')
+			$("#password").val('')
+			$("#username").removeClass("hidden")
+			$("#password").removeClass("hidden")
+			$("#login").removeClass("hidden")
+			$(".lbls").removeClass("hidden")
+			$("#logout").addClass("hidden")
+			$("#register").removeClass("hidden")
+		}
+	</script>
+</body>
+</html>
